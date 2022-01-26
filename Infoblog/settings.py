@@ -121,6 +121,7 @@ STATIC_ROOT = BASE_DIR/'statics'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
+    "/app/static",
 ]
 
 MEDIA_URL = 'media/'
