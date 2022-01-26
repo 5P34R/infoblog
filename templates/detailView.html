@@ -8,9 +8,11 @@
 >
   {{ posts.title }}
 </h1>
+{% if posts.coverpic %}
 <div class="">
     <img class="object-center" src={{posts.coverpic.url}}>
 </div>
+{% endif %}
 
 <p class="text-lg my-2 leading-7 text-gray-400 my-20">
   {{posts.body}}
