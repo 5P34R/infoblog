@@ -67,7 +67,6 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            breakpoint()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             form.save()
