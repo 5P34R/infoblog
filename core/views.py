@@ -5,7 +5,6 @@ from .models import Post
 
 def index(request):
     posts = Post.objects.all()[:5]
-
     context = {
         'posts':posts
     }
@@ -36,3 +35,12 @@ def detailedView(request, slug):
     }
     return render(request, 'detailView.html', context)
 
+
+def search(request):
+    if request.method == 'POST':
+        search = request.POST['searched']
+        posts = Post.objects.filter(title__contains=search)
+        return render(request, 'blog.html', {'posts':posts})
+    else:
+        posts = Post.objects.all()
+        return render(request, 'blog.html',{'posts':posts})

@@ -1,3 +1,4 @@
+from email.policy import default
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -17,9 +18,14 @@ class Post(models.Model):
     coverpic = models.ImageField(upload_to='post', blank=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
+    date = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(choices=STATUS_CHOICE, max_length=10, default='draft')
+
+    def save(self):
+        self.date = f"{self.publish.strftime('%B')} {self.publish.strftime('%D').split('/')[1]} 20{self.publish.strftime('%D').split('/')[2]}"
+        super(Post, self).save()
 
     class Meta:
         ordering = ('-publish'),
