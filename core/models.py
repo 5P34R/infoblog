@@ -32,3 +32,13 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    message = models.TextField()
+
+    def __str__(self) -> str:
+        return f"{self.message}"

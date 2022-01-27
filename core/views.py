@@ -4,9 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 from .forms import UserRegisterForm
-
-
-from .models import Post
+from .models import Post, Comment
 
 def index(request):
     posts = Post.objects.all()[:5]
@@ -35,8 +33,12 @@ def blog(request):
 
 def detailedView(request, slug):
     posts = Post.objects.get(slug=slug)
+    comments = Comment.objects.filter(post=posts)
+    commentCount = Comment.objects.filter(post=posts).count()
     context = {
-        'posts':posts
+        'posts':posts,
+        'comments':comments,
+        'commentCount':commentCount
     }
     return render(request, 'detailView.html', context)
 
@@ -76,3 +78,9 @@ def register(request):
                 return redirect('/')
         return render(request, 'auth/signup.html', {'form': form})
     return render(request, 'auth/signup.html')
+
+
+def comment(request):
+    if request.method == 'POST':
+        print('called')
+    return render(request, 'detailView.html')
