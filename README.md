@@ -1,5 +1,7 @@
 # infoblog
 
+Hosted at https://protected-beyond-07732.herokuapp.com/
+
 ## TODO
 
 - emailing system
