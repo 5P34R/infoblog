@@ -67,6 +67,13 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+            breakpoint()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
             form.save()
-        return render(request, 'auth/signup.html', {'error': form.errors})
+            user = authenticate(request, username=username, password=password)
+            if user != None:
+                login(request, user)
+                return redirect('/')
+        return render(request, 'auth/signup.html', {'form': form})
     return render(request, 'auth/signup.html')

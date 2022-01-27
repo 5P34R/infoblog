@@ -11,12 +11,14 @@
         Create Account
         </h2>
         
-        {% if error %}
+        {% if form.errors %}
         <div class="bg-red-500 rounded-md">
-            {% for e in error %}
-            <li class="text-gray-100 text-center text-lg">
-                {{e}}
-            </li>
+            {% for field in form %}
+                {% for error in field.errors %}
+                <li class="text-gray-100 text-lg ml-2">
+                    {{error}}
+                </li>
+                {% endfor %}
             {% endfor %}
                 
         </div>
