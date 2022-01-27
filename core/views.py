@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
+from .forms import UserRegisterForm
 
 
 from .models import Post
@@ -61,4 +62,11 @@ def user_login(request):
             return redirect('/')
         return render(request, 'auth/login.html', {'error':'Invalid Username/Password'})
     return render(request, 'auth/login.html')
-        
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'auth/signup.html', {'error': form.errors})
+    return render(request, 'auth/signup.html')
