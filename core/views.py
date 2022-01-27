@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+
 
 from .models import Post
 
@@ -44,3 +48,17 @@ def search(request):
     else:
         posts = Post.objects.all()
         return render(request, 'blog.html',{'posts':posts})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user= authenticate(request,username=username, password=password)
+
+        if user is not None:
+            form = login(request,user)
+            return redirect('/')
+        return render(request, 'auth/login.html', {'error':'Invalid Username/Password'})
+    return render(request, 'auth/login.html')
+        
